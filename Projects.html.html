@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Breanna West</title>
+    <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap)" rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS VARIABLES & RESET
+        ============================================ */
+        :root {
+            --navy: #1A2B4C;
+            --electric-blue: #4DA3FF;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --medium-gray: #E2E8F0;
+            --text-primary: #1E293B;
+            --text-secondary: #64748B;
+            --card-shadow: 0 4px 6px -1px rgba(26, 43, 76, 0.1), 0 2px 4px -1px rgba(26, 43, 76, 0.06);
+            --card-shadow-hover: 0 20px 25px -5px rgba(26, 43, 76, 0.1), 0 10px 10px -5px rgba(26, 43, 76, 0.04);
+            --glow: 0 0 20px rgba(77, 163, 255, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--white);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           CYBER GRID BACKGROUND
+        ============================================ */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.4;
+            background-image: 
+                linear-gradient(rgba(77, 163, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(77, 163, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .cyber-grid::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, var(--white) 70%);
+        }
+
+        /* ============================================
+           NAVIGATION
+        ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--medium-gray);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--electric-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--electric-blue);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--navy);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--navy);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: var(--navy);
+            transition: var(--transition);
+        }
+
+        /* ============================================
+           PAGE HEADER
+        ============================================ */
+        .page-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: var(--light-gray);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .page-header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .page-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           PROJECTS SECTION
+        ============================================ */
+        .projects-section {
+            padding: 4rem 2rem;
+        }
+
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid var(--medium-gray);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--electric-blue);
+        }
+
+        .project-header {
+            height: 160px;
+            background: linear-gradient(135deg, var(--navy), var(--electric-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+
+        .project-icon {
+            font-size: 3.5rem;
+            z-index: 1;
+        }
+
+        .project-body {
+            padding: 1.75rem;
+        }
+
+        .project-category {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--electric-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(77, 163, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .project-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .project-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tag {
+            font-size: 0.75rem;
+            padding: 0.35rem 0.75rem;
+            background: var(--light-gray);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid var(--navy);
+            background: transparent;
+            color: var(--navy);
+        }
+
+        .btn:hover {
+            background: var(--navy);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           PROJECT DETAILS MODAL
+        ============================================ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 43, 76, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            height: 200px;
+            background: linear-gradient(135deg, var(--navy), var(--electric-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            z-index: 1;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-category {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--electric-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(77, 163, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .modal-description {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-section li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .modal-section li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--electric-blue);
+            font-weight: bold;
+        }
+
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        .footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+        ============================================ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                gap: 0;
+                border-bottom: 1px solid var(--medium-gray);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid var(--light-gray);
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal {
+                margin: 1rem;
+                max-height: 85vh;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Cyber Grid Background -->
+    <div class="cyber-grid"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">Breanna<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>My Projects</h1>
+        <p>A collection of hands-on cybersecurity projects showcasing my skills in forensics, threat analysis, cloud security, and more.</p>
+    </header>
+
+    <!-- Projects Section -->
+    <section class="projects-section">
+        <div class="projects-container">
+            <div class="projects-grid">
+                
+                <!-- Project 1: Digital Forensics -->
+                <article class="project-card" id="forensics">
+                    <div class="project-header">
+                        <span class="project-icon">🔍</span>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-category">Digital Forensics</span>
+                        <h3>Digital Forensics Investigation</h3>
+                        <p>Performed forensic imaging, hash validation, file system analysis, and malware verification using Autopsy, WinHex, and VirusTotal.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Autopsy</span>
+                            <span class="project-tag">WinHex</span>
+                            <span class="project-tag">VirusTotal</span>
+                            <span class="project-tag">EC-Council DFE</span>
+                        </div>
+                        <button class="btn" onclick="openModal('forensics')">
+                            View Details
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Project 2: Malware Analysis -->
+                <article class="project-card" id="malware">
+                    <div class="project-header">
+                        <span class="project-icon">🦠</span>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-category">Malware Analysis</span>
+                        <h3>Malware Analysis & Threat Simulation</h3>
+                        <p>Created and analyzed Trojans, viruses, and worms in a controlled lab environment to understand attacker behavior and persistence.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Trojans</span>
+                            <span class="project-tag">Viruses</span>
+                            <span class="project-tag">Persistence</span>
+                            <span class="project-tag">Sandbox</span>
+                        </div>
+                        <button class="btn" onclick="openModal('malware')">
+                            View Details
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Project 3: Threat Intelligence -->
+                <article class="project-card" id="threat-intel">
+                    <div class="project-header">
+                        <span class="project-icon">🎯</span>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-category">Threat Intelligence</span>
+                        <h3>Threat Intelligence & MITRE Frameworks</h3>
+                        <p>Mapped adversary techniques using ATT&CK Navigator, explored defensive controls with D3FEND, and automated threat lookups with VirusTotal API.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">MITRE ATT&CK</span>
+                            <span class="project-tag">D3FEND</span>
+                            <span class="project-tag">VirusTotal API</span>
+                            <span class="project-tag">Python</span>
+                        </div>
+                        <button class="btn" onclick="openModal('threat-intel')">
+                            View Details
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Project 4: OSINT -->
+                <article class="project-card" id="osint">
+                    <div class="project-header">
+                        <span class="project-icon">🕵️</span>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-category">OSINT</span>
+                        <h3>OSINT & Reconnaissance</h3>
+                        <p>Used Google dorking, Netcraft, WHOIS, Sherlock, and Wayback Machine to gather intelligence and identify exposed assets.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Google Dorking</span>
+                            <span class="project-tag">WHOIS</span>
+                            <span class="project-tag">Sherlock</span>
+                            <span class="project-tag">Wayback Machine</span>
+                        </div>
+                        <button class="btn" onclick="openModal('osint')">
+                            View Details
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Project 5: Network Scanning -->
+                <article class="project-card" id="nmap">
+                    <div class="project-header">
+                        <span class="project-icon">📡</span>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-category">Network Security</span>
+                        <h3>Network Scanning & Enumeration</h3>
+                        <p>Performed host discovery, port scanning, service detection, and enumeration using multiple Nmap scan types.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Nmap</span>
+                            <span class="project-tag">Port Scanning</span>
+                            <span class="project-tag">Service Detection</span>
+                            <span class="project-tag">Enumeration</span>
+                        </div>
+                        <button class="btn" onclick="openModal('nmap')">
+                            View Details
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Project 6: AWS Cloud -->
+                <article class="project-card" id="cloud">
+                    <div class="project-header">
+                        <span class="project-icon">☁️</span>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-category">Cloud Security</span>
+                        <h3>AWS Cloud Infrastructure</h3>
+                        <p>Built a simulated business environment using EC2, IAM, S3, VPC, and security groups following least-privilege principles.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">AWS EC2</span>
+                            <span class="project-tag">IAM</span>
+                            <span class="project-tag">S3</span>
+                            <span class="project-tag">VPC</span>
+                        </div>
+                        <button class="btn" onclick="openModal('cloud')">
+                            View Details
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Project 7: Okta IAM -->
+                <article class="project-card" id="okta">
+                    <div class="project-header">
+                        <span class="project-icon">🔐</span>
+                    </div>
+                    <div class="project-body">
+                        <span class="project-category">Identity Management</span>
+                        <h3>Okta IAM Implementation</h3>
+                        <p>Configured users, groups, MFA, and lifecycle policies aligned with zero-trust identity management.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Okta</span>
+                            <span class="project-tag">MFA</span>
+                            <span class="project-tag">Zero Trust</span>
+                            <span class="project-tag">IAM</span>
+                        </div>
+                        <button class="btn" onclick="openModal('okta')">
+                            View Details
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <span class="modal-icon" id="modalIcon">🔍</span>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <span class="modal-category" id="modalCategory">Category</span>
+                <h2 class="modal-title" id="modalTitle">Project Title</h2>
+                <p class="modal-description" id="modalDescription">Project description goes here.</p>
+                
+                <div class="modal-section">
+                    <h4>Key Activities</h4>
+                    <ul id="modalActivities">
+                        <li>Activity 1</li>
+                        <li>Activity 2</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Tools & Technologies</h4>
+                    <div class="modal-tags" id="modalTags">
+                        <span class="project-tag">Tool 1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 Breanna West — Cybersecurity Portfolio</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // Project data for modals
+        const projectData = {
+            'forensics': {
+                icon: '🔍',
+                category: 'Digital Forensics',
+                title: 'Digital Forensics Investigation – EC-Council DFE Labs',
+                description: 'Performed comprehensive digital forensics investigations as part of EC-Council Digital Forensics Essentials training. This project involved acquiring forensic images, validating data integrity through hash analysis, and examining file systems for artifacts and evidence of malicious activity.',
+                activities: [
+                    'Created forensic disk images using industry-standard tools',
+                    'Validated image integrity using MD5 and SHA-256 hash verification',
+                    'Analyzed file systems to recover deleted files and hidden data',
+                    'Examined malware samples using VirusTotal for threat classification',
+                    'Documented findings in a forensic investigation report format'
+                ],
+                tags: ['Autopsy', 'WinHex', 'FTK Imager', 'VirusTotal', 'Hash Analysis', 'File System Analysis']
+            },
+            'malware': {
+                icon: '🦠',
+                category: 'Malware Analysis',
+                title: 'Malware Analysis & Threat Simulation',
+                description: 'Conducted hands-on malware analysis and threat simulation in an isolated lab environment. Created and analyzed various malware types to understand attacker techniques, persistence mechanisms, and evasion strategies used in real-world attacks.',
+                activities: [
+                    'Developed proof-of-concept Trojans, viruses, and worms for educational analysis',
+                    'Analyzed malware behavior using sandbox environments',
+                    'Studied persistence mechanisms including registry modifications and scheduled tasks',
+                    'Documented attack chains and indicators of compromise (IOCs)',
+                    'Implemented detection signatures based on observed malware behavior'
+                ],
+                tags: ['Trojans', 'Viruses', 'Worms', 'Sandbox Analysis', 'Persistence Techniques', 'IOC Analysis']
+            },
+            'threat-intel': {
+                icon: '🎯',
+                category: 'Threat Intelligence',
+                title: 'Threat Intelligence & MITRE Frameworks',
+                description: 'Leveraged MITRE frameworks to map adversary techniques and develop defensive strategies. Automated threat intelligence gathering using API integrations to streamline threat analysis workflows.',
+                activities: [
+                    'Mapped adversary TTPs using MITRE ATT&CK Navigator',
+                    'Explored defensive controls and countermeasures with D3FEND framework',
+                    'Developed Python scripts to automate VirusTotal API lookups',
+                    'Created threat intelligence reports mapping observed behaviors to ATT&CK techniques',
+                    'Built automated alerting for known malicious indicators'
+                ],
+                tags: ['MITRE ATT&CK', 'D3FEND', 'VirusTotal API', 'Python', 'Threat Mapping', 'Automation']
+            },
+            'osint': {
+                icon: '🕵️',
+                category: 'OSINT',
+                title: 'OSINT & Reconnaissance',
+                description: 'Performed open-source intelligence gathering and reconnaissance using various tools and techniques. Identified exposed assets, gathered organizational intelligence, and documented potential attack surfaces.',
+                activities: [
+                    'Used Google dorking techniques to find sensitive exposed information',
+                    'Performed domain reconnaissance using Netcraft and WHOIS lookups',
+                    'Conducted username enumeration across platforms using Sherlock',
+                    'Analyzed historical website data with Wayback Machine',
+                    'Compiled reconnaissance findings into actionable intelligence reports'
+                ],
+                tags: ['Google Dorking', 'Netcraft', 'WHOIS', 'Sherlock', 'Wayback Machine', 'Reconnaissance']
+            },
+            'nmap': {
+                icon: '📡',
+                category: 'Network Security',
+                title: 'Network Scanning & Enumeration – Nmap Labs',
+                description: 'Mastered network scanning and enumeration techniques using Nmap. Performed comprehensive network assessments including host discovery, port scanning, service detection, and OS fingerprinting.',
+                activities: [
+                    'Conducted host discovery using various Nmap ping techniques',
+                    'Performed TCP/UDP port scanning with different scan types (SYN, Connect, FIN)',
+                    'Identified running services and versions using service detection (-sV)',
+                    'Executed OS fingerprinting to identify target operating systems',
+                    'Used Nmap scripting engine (NSE) for vulnerability detection'
+                ],
+                tags: ['Nmap', 'Port Scanning', 'Service Detection', 'OS Fingerprinting', 'NSE Scripts', 'Network Enumeration']
+            },
+            'cloud': {
+                icon: '☁️',
+                category: 'Cloud Security',
+                title: 'AWS Cloud Infrastructure',
+                description: 'Designed and deployed a secure cloud infrastructure on AWS simulating a business environment. Implemented security best practices including least-privilege access, network segmentation, and secure storage configurations.',
+                activities: [
+                    'Deployed EC2 instances with hardened security configurations',
+                    'Configured IAM users, groups, and policies following least-privilege principles',
+                    'Set up S3 buckets with appropriate access controls and encryption',
+                    'Designed VPC architecture with public/private subnets and security groups',
+                    'Implemented network ACLs and security group rules for traffic control'
+                ],
+                tags: ['AWS EC2', 'IAM', 'S3', 'VPC', 'Security Groups', 'Least Privilege']
+            },
+            'okta': {
+                icon: '🔐',
+                category: 'Identity Management',
+                title: 'Okta IAM Implementation',
+                description: 'Implemented identity and access management solutions using Okta aligned with zero-trust security principles. Configured user lifecycle management, multi-factor authentication, and access policies.',
+                activities: [
+                    'Created and managed users and groups within Okta directory',
+                    'Configured multi-factor authentication (MFA) policies',
+                    'Set up user lifecycle policies for onboarding and offboarding',
+                    'Implemented single sign-on (SSO) integrations with applications',
+                    'Designed access policies aligned with zero-trust principles'
+                ],
+                tags: ['Okta', 'MFA', 'SSO', 'Zero Trust', 'User Lifecycle', 'Access Policies']
+            }
+        };
+
+        // Open modal with project data
+        function openModal(projectId) {
+            const project = projectData[projectId];
+            if (!project) return;
+
+            document.getElementById('modalIcon').textContent = project.icon;
+            document.getElementById('modalCategory').textContent = project.category;
+            document.getElementById('modalTitle').textContent = project.title;
+            document.getElementById('modalDescription').textContent = project.description;
+
+            // Populate activities
+            const activitiesList = document.getElementById('modalActivities');
+            activitiesList.innerHTML = project.activities.map(a => `<li>${a}</li>`).join('');
+
+            // Populate tags
+            const tagsContainer = document.getElementById('modalTags');
+            tagsContainer.innerHTML = project.tags.map(t => `<span class="project-tag">${t}</span>`).join('');
+
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Navbar shadow on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
